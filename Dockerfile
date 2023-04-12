@@ -20,6 +20,9 @@ WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 
+COPY package.json yarn.lock ./
+RUN yarn install
+
 RUN bundle install
 
 COPY . /myapp
