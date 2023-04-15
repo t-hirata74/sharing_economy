@@ -18,6 +18,7 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "Tokyo"
 
     # generate時のファイル追加設定
     config.generators do |g|
