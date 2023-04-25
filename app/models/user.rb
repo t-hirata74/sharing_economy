@@ -8,4 +8,7 @@ class User < ApplicationRecord
          :lockable, # パスワード複数間違いでアカウントロック
          :timeoutable, # ログイン保持機能
          :trackable # ログイン時のipなどを記録
+
+  validates :nickname, presence: true
+  validates :gender, presence: true
 end
