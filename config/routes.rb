@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   devise_scope :user do
-    get "users/registrations/complate" => "users/registrations#complete"
+    get "users/registrations/complete" => "users/registrations#complete"
   end
-  
+
   resource :user_information
   resource :user_mobile_phone, only: %i[new create] do
     collection do
