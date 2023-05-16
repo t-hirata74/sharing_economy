@@ -37,6 +37,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
+  def complete
+  end
 
   protected
 
