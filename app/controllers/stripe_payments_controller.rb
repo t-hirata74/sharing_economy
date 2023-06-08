@@ -1,6 +1,6 @@
-class StripePaymentController < ApplicationController
+class StripePaymentsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
   end
 
