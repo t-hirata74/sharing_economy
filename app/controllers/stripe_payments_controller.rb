@@ -14,6 +14,8 @@ class StripePaymentsController < ApplicationController
   end
 
   def create
+    # テスト時のカード番号は4242 4242 4242 4242(visa)
+    # 参考：https://stripe.com/docs/testing
     if params[:redirect_status] == "succeeded"
       setup_intent = Stripe::SetupIntent.retrieve(params[:setup_intent])
 
