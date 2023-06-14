@@ -1,0 +1,2 @@
+class CurrentStripePaymentsController < ApplicationController
+end
