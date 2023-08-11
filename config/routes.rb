@@ -40,5 +40,7 @@ Rails.application.routes.draw do
       resource :seller_evaluation, only: %i[create]
     end
   end
+  resources :users, only: %i[show]
+
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
