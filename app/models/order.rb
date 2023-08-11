@@ -6,7 +6,8 @@ class Order < ApplicationRecord
   has_many :messages, dependent: :destroy
 
   has_one :payer_evaluation, dependent: :destroy
-
+  has_one :seller_evaluation, dependent: :destroy
+  
   enum status: {
     ordered: 10,
     shipped: 20,
