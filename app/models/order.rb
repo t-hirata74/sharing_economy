@@ -7,7 +7,7 @@ class Order < ApplicationRecord
 
   has_one :payer_evaluation, dependent: :destroy
   has_one :seller_evaluation, dependent: :destroy
-  
+
   enum status: {
     ordered: 10,
     shipped: 20,
@@ -28,6 +28,7 @@ class Order < ApplicationRecord
   validates :payer_building_name, presence: true
   validates :payer_phone_number, presence: true
   validates_associated :payer_evaluation # 関連付けされている両方のモデルでバリデーションを実行する
+  validates_associated :seller_evaluation
 
   def pay!
     transaction do
