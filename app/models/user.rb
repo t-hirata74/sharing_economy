@@ -1,13 +1,13 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, # 認証
-         :registerable, # 新規登録
-         :recoverable, # パスワードリセット
-         :rememberable, # ログイン状態を保持
-         :validatable, # バリデーション
-         :confirmable, # メールアドレス認証
-         :lockable, # パスワード複数間違いでアカウントロック
-         :timeoutable, # ログイン保持機能
-         :trackable # ログイン時のipなどを記録
+  devise :database_authenticatable,
+         :registerable,
+         :recoverable,
+         :rememberable,
+         :validatable,
+         :confirmable,
+         :lockable,
+         :timeoutable,
+         :trackable
 
   validates :nickname, presence: true
   validates :gender, presence: true
@@ -18,18 +18,21 @@ class User < ApplicationRecord
   has_one :user_mobile_phone, dependent: :destroy
   has_one :stripe_customer, dependent: :destroy
   has_one :current_shipping_address, dependent: :destroy
-  
+
   has_many :items, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :reports, dependent: :destroy
   has_many :shipping_addresses, dependent: :destroy
-  
+
   enum gender: {
-    unanswered: 0,
-    male: 1,
-    demale: 2
+      unanswered: 0,
+      male: 1,
+      female: 2
   }
+
+  EVALUATION_MAX_RATE = 5
+  EVALUATION_MINIMUM_RATE = 1
 
   class << self
     def genders_i18n
@@ -53,6 +56,20 @@ class User < ApplicationRecord
           items.user_id = :item_user_id
         )
       SQL
+  end
+
+  def evaluation_rate
+    evaluation_mappings = evaluations.each_with_object({ good: 0, bad: 0 }) do |evaluation, result|
+      result[:good] += 1 if evaluation.good?
+      result[:bad] += 1 unless evaluation.good?
+    end
+
+    evaluation_count = evaluation_mappings[:good] + evaluation_mappings[:bad]
+
+    good_total_point = evaluation_mappings[:good] * EVALUATION_MAX_RATE
+    bad_total_point = evaluation_mappings[:bad] * EVALUATION_MINIMUM_RATE
+
+    ((good_total_point + bad_total_point) / evaluation_count).round
   end
 
   def remember_me
