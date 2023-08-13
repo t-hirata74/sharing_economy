@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   resources :users, only: %i[show] do
     resources :evaluations, only: %i[index]
   end
+  
+  get "mypage" => "mypage#index"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
