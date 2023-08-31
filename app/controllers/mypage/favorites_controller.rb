@@ -1,4 +1,6 @@
 class Mypage::FavoritesController < ApplicationController
-  def index　destroy
+  before_action :authenticate_user!
+  
+  def index destroy
   end
 end
