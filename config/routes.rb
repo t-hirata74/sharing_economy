@@ -39,12 +39,8 @@ Rails.application.routes.draw do
       resource :payer_evaluation, only: %i[create]
       resource :seller_evaluation, only: %i[create]
     end
-    namespace :items do
-      get "in_progress" => "in_progress#index", as: :in_progress
-    end
   end
-  resources :users, only: %i[show]
-
+  
   resources :users, only: %i[show] do
     resources :evaluations, only: %i[index]
   end
@@ -53,6 +49,9 @@ Rails.application.routes.draw do
   namespace :mypage do
     resources :favorites, only: %i[index destroy]
     resources :items, only: %i[index]
+    namespace :items do
+      get "in_progress" => "in_progress#index", as: :in_progress
+    end
   end
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
