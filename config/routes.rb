@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       resource :seller_evaluation, only: %i[create]
     end
   end
-  
+
   resources :users, only: %i[show] do
     resources :evaluations, only: %i[index]
   end
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
     resources :items, only: %i[index]
     namespace :items do
       get "in_progress" => "in_progress#index", as: :in_progress
+      get "completed" => "completed#index", as: :completed
     end
   end
 
